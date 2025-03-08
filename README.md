@@ -23,7 +23,3 @@ A simple **To-Do List Backend** built with **Node.js, Express, and MongoDB**, im
 ```
 git clone https://github.com/your-username/mern-todo-api-with-tests.git
 cd mern-todo-api-with-tests ```
- 
-
-
-
