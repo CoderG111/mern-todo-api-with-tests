@@ -22,4 +22,30 @@ A simple **To-Do List Backend** built with **Node.js, Express, and MongoDB**, im
 ### 1️⃣ Clone the repository
 ```
 git clone https://github.com/your-username/mern-todo-api-with-tests.git
-cd mern-todo-api-with-tests ```
+```
+cd mern-todo-api-with-tests 
+
+2️⃣ Install dependencies
+```
+npm install
+```
+3️⃣ Set up environment variables
+Create a .env file and add:
+```
+MONGO_URI=your_mongodb_connection_string
+PORT=5000
+```
+4️⃣ Run the server
+```
+npm start
+```
+Server runs on http://localhost:5000 🚀
+
+🛠 API Endpoints
+Method	Endpoint	Description
+GET	/api/todos	Fetch all todos
+POST	/api/todos	Create a new todo
+PUT	/api/todos/:id	Update a todo
+DELETE	/api/todos/:id	Delete a todo
+
+
