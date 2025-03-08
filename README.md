@@ -41,11 +41,33 @@ npm start
 ```
 Server runs on http://localhost:5000 🚀
 
-🛠 API Endpoints
-Method	Endpoint	Description
-GET	/api/todos	Fetch all todos
-POST	/api/todos	Create a new todo
-PUT	/api/todos/:id	Update a todo
-DELETE	/api/todos/:id	Delete a todo
+## 🛠 API Endpoints
+
+| Method   | Endpoint        | Description        |
+|----------|----------------|--------------------|
+| **GET**  | `/api/todos`   | Fetch all todos   |
+| **POST** | `/api/todos`   | Create a new todo |
+| **PUT**  | `/api/todos/:id` | Update a todo   |
+| **DELETE** | `/api/todos/:id` | Delete a todo |
+
+✅ Running Tests
+```
+npm test
+```
+
+💡 Future Enhancements
+🔒 Add JWT authentication
+🏗️ Deploy on cloud
+🐳 Dockerize the app
+
+
+Contributions & feedback are welcome! 🚀
+Made with ❤️ by Your Name
+
+
+---
+
+🔹 Let me know if you want any modifications! 🚀🔥
+
 
 
