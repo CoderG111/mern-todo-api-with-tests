@@ -1,7 +1,7 @@
 # mern-todo-api-with-tests
 A fully functional To-Do List Backend built with Node.js, Express, and MongoDB, featuring complete CRUD operations, validation, structured error handling, and API testing with Jest &amp; Supertest. 🚀 Planned updates: JWT authentication &amp; Docker integration.
 
-# 📝 MERN To-Do API with Tests 🚀
+# 📝 MERN To-Do APIS with Authentication & Tests 🚀
 
 A simple **To-Do List Backend** built with **Node.js, Express, and MongoDB**, implementing full **REST API functionality** with proper **testing using Jest & Supertest**.
 
@@ -12,11 +12,14 @@ A simple **To-Do List Backend** built with **Node.js, Express, and MongoDB**, im
 ✅ Request validation & error handling  
 ✅ API testing with Jest & Supertest  
 ✅ Clean & scalable folder structure  
+✅ JWT-based authentication (Signup, Login)  
+ 
 
 ## ⚡ Tech Stack
 - **Backend:** Node.js, Express.js  
 - **Database:** MongoDB (Mongoose)  
 - **Testing:** Jest, Supertest  
+- **Authentication:**  JWT (JSON Web Token)  
 
 ## 🚀 Installation & Setup
 ### 1️⃣ Clone the repository
