@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const todoRoutes = require("./routes/todoRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 // Environment Variables
 const MONGO_URI = process.env.MONGO_URI;
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/api/todos", todoRoutes);
+app.use("/api/auth", authRoutes);
 
 // MongoDB Connection
 mongoose

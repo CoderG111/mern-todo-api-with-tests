@@ -1,10 +1,11 @@
 const express = require("express");
 const Todo = require("../models/Todo");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
 // 1️⃣ Create a Todo (POST)
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const { title } = req.body;
     if (!title) return res.status(400).json({ message: "Title is required" });
@@ -18,7 +19,7 @@ router.post("/", async (req, res) => {
 });
 
 // 2️⃣ Get all Todos (GET)
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const todos = await Todo.find();
     res.json(todos);
@@ -28,7 +29,7 @@ router.get("/", async (req, res) => {
 });
 
 // 3️⃣ Get a single Todo by ID (GET)
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const todo = await Todo.findById(req.params.id);
     if (!todo) return res.status(404).json({ message: "Todo not found" });
@@ -40,7 +41,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // 4️⃣ Update a Todo (PUT - Replace entire object)
-router.put("/:id", async (req, res) => {
+router.put("/:id", authMiddleware, async (req, res) => {
   try {
     const { title, completed } = req.body;
     const updatedTodo = await Todo.findByIdAndUpdate(
@@ -57,7 +58,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // 5️⃣ Update a Todo partially (PATCH - Modify specific fields)
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -72,7 +73,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // 6️⃣ Delete a Todo (DELETE)
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
     if (!deletedTodo)
