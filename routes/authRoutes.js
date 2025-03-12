@@ -17,9 +17,15 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty())
+      return res.status(400).json({ errors: errors.array() });
+
     try {
       const { username, email, password } = req.body;
+      // Debugging Logs
+      // Check if username is null or empty before proceeding
+      if (!username)
+        return res.status(400).json({ message: "Username is required" });
 
       let user = await User.findOne({ email });
       if (user) return res.json({ message: "User Already exist" });
@@ -33,7 +39,10 @@ router.post(
         password: hashedPassword,
       });
       await user.save();
+
+      return res.status(201).json({ message: "User created successfully" });
     } catch (err) {
+      console.error("Error:", err);
       res.status(500).json({ error: err.message });
     }
   }
@@ -59,14 +68,52 @@ router.post(
       if (!isMatch)
         return res.status(400).json({ message: "Invalid credentials" });
 
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
+      const accessToken = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1m",
+        }
+      );
+      const refreshToken = jwt.sign(
+        { userId: user._id },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
+      // Store refresh token in an HttpOnly cookie
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true, // Prevents client-side JavaScript access
+        secure: true, // Ensures cookies are sent over HTTPS
+        sameSite: "Strict", // Prevents CSRF attacks
+        maxAge: 7 * 24 * 60 * 60 * 1000, // Expires in 7 days
       });
-      res.json({ token });
+
+      res.json({ accessToken, refreshToken });
     } catch (err) {
       res.json(500).json({ error: err.message });
     }
   }
 );
+
+router.post("/generateNewAccessToken", async (req, res) => {
+  // const { refreshToken } = req.body;
+  const refreshToken = req.cookies.refreshToken;
+  console.log(refreshToken);
+  if (!refreshToken) return res.status(400).json({ message: "Invalid Token" });
+
+  try {
+    const decode = jwt.verify(refreshToken, process.env.JWT_SECRET);
+    const newAccessToken = jwt.sign(
+      { userId: decode.userId },
+      process.env.JWT_SECRET,
+      { expiresIn: "1m" }
+    );
+    res.json({ newAccessToken });
+  } catch (err) {
+    return res
+      .status(403)
+      .json({ message: "Invalid or Refresh Token is expired" });
+  }
+});
 
 module.exports = router;

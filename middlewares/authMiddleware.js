@@ -16,6 +16,11 @@ const authMiddleware = (req, res, next) => {
     req.user = verified; // Attach user data to request
     next();
   } catch (err) {
+    if (err.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ message: "Token expired, please refresh." });
+    }
     return res.status(403).json({ message: "Invalid token" });
   }
 };
